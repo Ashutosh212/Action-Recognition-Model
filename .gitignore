@@ -1,0 +1,13 @@
+kinematics label
+kinematics 400 - test_set
+mmaction2/checkpoints
+splits
+data
+btp
+results
+test_videos
+
+
+*.mp4
+*.pkl
+*.pth
