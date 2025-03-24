@@ -5,21 +5,23 @@ import random
 import numpy as np
 
 # Paths
-df_path = 'results\\clustering_results_3s_4c.csv'
-videos_path = 'splits_3s'
+df_path = 'results\\clustering_results_concat_3s_4c_time.csv'
+videos_path = 'splits\\splits_3s'
 
 df = pd.read_csv(df_path)
 
-label = int(input("Enter the cluster label (e.g., 0, 1, or 2): "))
+label = int(input("Enter the cluster label (e.g., 0, 1, 2, ....) :) "))
 
 filtered_videos = df[df["cluster_label"] == label]["video_name"].tolist()
+filtered_videos = [filename.replace('.npy', '.mp4') for filename in filtered_videos]
+print(filtered_videos)
 
-if len(filtered_videos) < 4:
+if len(filtered_videos) < 6:
     print(f"Not enough videos for label {label}. Found only {len(filtered_videos)} videos.")
 else:
     # Randomly select 6 videos
-    selected_videos = random.sample(filtered_videos, 4)
-
+    selected_videos = random.sample(filtered_videos, 6)
+    print(filtered_videos)
     caps = [cv2.VideoCapture(os.path.join(videos_path, video)) for video in selected_videos]
 
     while True:
@@ -38,9 +40,9 @@ else:
             else:
                 print(f"Failed to read frame from video, skipping...")
 
-        if len(frames) == 4:  # Ensure there are 6 frames to display
-            row1 = np.hstack(frames[:2])  # First 3 frames
-            row2 = np.hstack(frames[2:])  # Next 3 frames
+        if len(frames) == 6:  # Ensure there are 6 frames to display
+            row1 = np.hstack(frames[:3])  # First 3 frames
+            row2 = np.hstack(frames[3:])  # Next 3 frames
             grid = np.vstack([row1, row2])  # Stack rows vertically
 
             cv2.imshow(f"Cluster {label} - Playing Videos (2x2)", grid)
@@ -54,6 +56,5 @@ else:
 
     cv2.destroyAllWindows()
 
-# Print video counts for each cluster
-for i in range(6):
+for i in range(4):
     print(f'for {i}th Label : {len(df[df["cluster_label"]==i])}')

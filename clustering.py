@@ -1,16 +1,3 @@
-# folder_path = 'results'
-
-# print(len(os.listdir(folder_path)))
-
-
-# for files in os.listdir(folder_path):
-#     path = os.path.join(folder_path, files)
-#     loaded_data = np.load(path, allow_pickle=True).item()
-#     video_name = loaded_data["video_name"]
-#     pred_score = loaded_data["pred_score"]
-#     print(video_name)
-#     print(pred_score)
-
 
 import os
 import pandas as pd
